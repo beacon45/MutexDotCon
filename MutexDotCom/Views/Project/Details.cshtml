@@ -1,0 +1,89 @@
+﻿@model Project
+
+@{
+    ViewData["Title"] = "Project details";
+}
+
+<div class="row">
+    <div class="col-md-8 offset-2">
+        <div class="card mb-12">
+            <div class="row g-0">
+                <div class="col-md-12">
+                    <div class="card-header text-white bg-info">
+                        <p class="card-text">
+                            <h5 class="card-title">
+                                @Model.Name
+                            </h5>
+                        </p>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <img src="@Model.ImageURL" width="100%" alt="@Model.Name">
+                </div>
+                <div class="col-md-8">
+                    <div class="card-body">
+                        <p class="card-text">@Model.ProbelemStatement</p>
+                        <p class="card-text">
+                            <b>Department: </b>
+                            <a asp-controller="Department" asp-action="Details" asp-route-id="@Model.DepartmentId">
+                                @Model.Department.Name
+                            </a>
+                        </p>
+                        <p class="card-text">
+                            <b>Manager: </b>
+                            <a asp-controller="Manager" asp-action="Details" asp-route-id="@Model.ManagerId">
+                                @Model.Manager.Name
+                            </a>
+                        </p>
+                        @* <p class="card-text"><b>Category: </b>@Project.Cast</p> *@
+                        <p class="card-text"><b>Start Date: </b>@Model.InitialDate.ToString("dd MMM yy")</p>
+                        <p class="card-text"><b>End Date: </b>@Model.EndDate.ToString("dd MMM yy")</p>
+                        <p class="card-text ">
+                            <b>Status: </b>
+                            @if (DateTime.Now >= Model.InitialDate && DateTime.Now <= Model.EndDate)
+                            {
+                                <span class="badge bg-success text-white">AVAILABLE</span>
+                            }
+                            else if (DateTime.Now > Model.EndDate)
+                            {
+                                <span class="badge bg-danger text-white">EXPIRED</span>
+                            }
+                            else
+                            {
+                                <span class="badge bg-primary text-white">UPCOMING</span>
+                            }
+                        </p>
+                        <p class="card-text">
+                            <b>Actors: </b>
+                            <hr />
+                            <div class="row">
+                                @foreach (var actor in Model.DevProjects)
+                                {
+                                    <div class="col-md-3 text-center">
+                                        <img class="border-info rounded-circle px-2" src="@actor.Developer.ProfilePictureURL" style="max-width: 150px" />
+                                        <br />
+                                        <a asp-controller="Developer" asp-action="Details" asp-route-id="@actor.DevId">@actor.Developer.Name</a>
+                                    </div>
+                                }
+                            </div>
+                        </p>
+
+                    </div>
+                </div>
+                <div class="col-md-12">
+                    <div class="card-footer">
+                        <p class="card-text">
+                            <a class="btn btn-outline-primary float-right" asp-action="Index">
+                                Back to List
+                            </a>
+                            @* <a class="btn btn-success text-white  @((DateTime.Now > Model.EndDate) ? "disabled" : "")"
+                               asp-controller="Orders"
+                               asp-action="AddItemToShoppingCart" asp-route-id="@Model.Id"><i class="bi bi-cart-plus"></i> Add to Cart (Price @Model.Price.ToString("c"))
+                           </a> *@
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,102 @@
+﻿@model MutexDotCom.Data.ViewModels.NewProjectVM
+@using MutexDotCom.Data;
+ 
+@{
+    ViewData["Title"] = "Create a new project";
+}
+
+<div class="row">
+    <div class="col-md-8 offset-2">
+        <p>
+            <h4>Create a new project</h4>
+        </p>
+
+        <div class="row">
+            <div class="col-md-8 offset-2">
+                <form asp-action="Create">
+                    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label asp-for="Name" class="control-label"></label>
+                                <input asp-for="Name" class="form-control" />
+                                <span asp-validation-for="Name" class="text-danger"></span>
+                            </div>
+                            <div class="form-group">
+                                <label asp-for="InitialDate" class="control-label"></label>
+                                <input asp-for="InitialDate" type="date" class="form-control" />
+                                <span asp-validation-for="InitialDate" class="text-danger"></span>
+                            </div>
+                            <div class="form-group">
+                                <label asp-for="EndDate" class="control-label"></label>
+                                <input asp-for="EndDate" type="date" class="form-control" />
+                                <span asp-validation-for="EndDate" class="text-danger"></span>
+                            </div>
+                            <div class="form-group">
+                                <label asp-for="ClientName" class="control-label"></label>
+                                <input asp-for="ClientName" class="form-control" />
+                                <span asp-validation-for="ClientName" class="text-danger"></span>
+                            </div>
+                            <div class="form-group">
+                                <label asp-for="ImageURL" class="control-label"></label>
+                                <input asp-for="ImageURL" class="form-control" />
+                                <span asp-validation-for="ImageURL" class="text-danger"></span>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label asp-for="DepartmentIds" class="control-label"></label>
+                                <select asp-for="DepartmentIds" class="form-control" asp-items="ViewBag.Departmnets"></select>
+                                <span asp-validation-for="DepartmentIds" class="text-danger"></span>
+                            </div>
+                            @* <div class="form-group">
+                                <label asp-for="ProjectCategory" class="control-label"></label>
+                                <select asp-for="ProjectCategory" class="form-control" asp-items="Html.GetEnumSelectList<MovieCategory>()"></select>
+                                <span asp-validation-for="ProjectCategory" class="text-danger"></span>
+                            </div> *@
+                            <div class="form-group">
+                                <label asp-for="ManagerIds" class="control-label"></label>
+                                <select asp-for="ManagerIds" class="form-control" asp-items="ViewBag.Managers"></select>
+                                <span asp-validation-for="ManagerIds" class="text-danger"></span>
+                            </div>
+                            <div class="form-group">
+                                <label asp-for="DevelopersIds" class="control-label"></label>
+                                <select asp-for="DevelopersIds" class="form-control" asp-items="ViewBag.Developers" multiple></select>
+                                <span asp-validation-for="DevelopersIds" class="text-danger"></span>
+                            </div>
+                        </div>
+                        <div class="col-md-12">
+                            <div class="form-group">
+                                <label asp-for="ProbelemStatement" class="control-label"></label>
+                                <textarea asp-for="ProbelemStatement" class="form-control"></textarea>
+                                <span asp-validation-for="ProbelemStatement" class="text-danger"></span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-md-4 offset-4 text-center">
+                        <img width="100%" id="ImageUrlPreview" />
+                    </div>
+
+                    <div class="form-group">
+                        <input type="submit" value="Create" class="btn btn-outline-success float-right" />
+                        <a class="btn btn-outline-secondary" asp-action="Index">Show all</a>
+                    </div>
+
+                </form>
+
+            </div>
+        </div>
+
+    </div>
+</div>
+
+@section Scripts{ 
+    <script>
+        $("#ImageURL").on("change", function () {
+            var output = document.getElementById("ImageUrlPreview");
+            output.src = $(this).val();
+        })
+    </script>
+}
